@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="tk.wuwenjie.fakegps.MainActivity" >
+
+    <item
+        android:id="@+id/START_GPS"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/START_GPS"/>
+    
+    <item
+        android:id="@+id/STOP_GPS"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/STOP_GPS"/>
+    
+     <item
+        android:id="@+id/simulate"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/simulate"/>
+     
+     <item
+        android:id="@+id/about"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/about"/>
+
+</menu>

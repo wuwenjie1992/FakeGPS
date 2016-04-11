@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tk.wuwenjie.fakegps"
+    android:installLocation="preferExternal"
+    android:versionCode="1"
+    android:versionName="1.0 GPS记录、欺骗 wwj Valar Morghulis Valar Dohaeris" >
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="22" />
+
+    <!-- 允许程序访问精良位置(GPS) (Allows an application to access fine (e.g., GPS) location) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FakeLocation"
+            android:label="@string/simulate" >
+        </activity>
+
+        <service android:name="tk.wuwenjie.fakegps.GPSWriteService" />
+        <service android:name="tk.wuwenjie.fakegps.FakeLocationService" />
+    </application>
+
+</manifest>

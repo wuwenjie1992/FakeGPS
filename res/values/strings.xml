@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FakeGPS</string>
+    <string name="hello_world">注意点：
+        1.受保护的后台应用 锁屏后保持运行开启\n
+        2.开启允许模拟位置  关于手机-> 版本号 -> 开发者选项->调试-允许模拟位置\n
+        3.定位服务 开启 模式  仅限设备\n
+        4.其他软件 定位时 飞行模式 数据、wifi关闭\n</string>
+    <string name="START_GPS">START GPS</string>
+    <string name="STOP_GPS">STOP GPS</string>
+    <string name="simulate">SIMULATE</string>
+    <string name="simulateDb">/storage/emulated/0/FAKEGPS/GPS归.db</string>
+    <string name="START_simulate">START SIMULATE</string>
+    <string name="STOP_simulate">STOP SIMULATE</string>
+    <string name="about">ABOUT</string>
+    
+
+    <string-array name="db_array">
+        <item>/storage/emulated/0/FAKEGPS/GPS归.db</item>
+        <item>/storage/emulated/0/FAKEGPS/GPS.db</item>
+        <item>/sdcard/FAKEGPS/GPS.db</item>
+    </string-array>
+
+</resources>
