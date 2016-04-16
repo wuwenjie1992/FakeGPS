@@ -3,13 +3,13 @@
     package="tk.wuwenjie.fakegps"
     android:installLocation="preferExternal"
     android:versionCode="1"
-    android:versionName="1.0 GPS记录、欺骗 wwj Valar Morghulis Valar Dohaeris" >
+    android:versionName="1.0-beta.2 GPS模拟与记录 wwj Valar Morghulis Valar Dohaeris" >
 
     <uses-sdk
         android:minSdkVersion="19"
         android:targetSdkVersion="22" />
 
-    <!-- 允许程序访问精良位置(GPS) (Allows an application to access fine (e.g., GPS) location) -->
+    <!-- Allows an application to access fine (e.g., GPS) location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />

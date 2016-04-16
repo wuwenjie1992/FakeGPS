@@ -5,6 +5,7 @@ import java.io.File;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -23,7 +24,10 @@ public class FakeLocation extends Activity {
 		setContentView(R.layout.fake_location);
 
 		fake_info = (TextView) findViewById(R.id.fake_info);
-		fake_info.setText("开始模拟,在下面的地址填写GPS记录文件！");
+		fake_info
+				.setText("开始模拟,在下面的地址填写GPS记录文件！\n" + "可能的位置："
+						+ Environment.getExternalStorageDirectory()
+						+ "/FakeGPS/GPS.db");
 
 		// Get a reference to the AutoCompleteTextView in the layout
 		dbfile = (AutoCompleteTextView) findViewById(R.id.dbfile);
@@ -86,7 +90,7 @@ public class FakeLocation extends Activity {
 				return false;
 			}
 
-			Toast.makeText(this, path, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "开始循环模拟：" + path, Toast.LENGTH_SHORT).show();
 
 			Intent mIntent01 = new Intent(FakeLocation.this,
 					FakeLocationService.class);

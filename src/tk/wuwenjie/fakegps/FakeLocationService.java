@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 public class FakeLocationService extends Service {
 
@@ -58,6 +60,23 @@ public class FakeLocationService extends Service {
 		Log.i(TAG, "Action:" + Action);
 
 		if (Action.equals("Start")) {
+
+			// 判断是否允许模拟位置
+			boolean isCloseMOCK = Settings.Secure.getInt(getContentResolver(),
+					Settings.Secure.ALLOW_MOCK_LOCATION, 0) == 0;
+
+			if (isCloseMOCK) {
+
+				Toast.makeText(this, "请开启模拟位置...", Toast.LENGTH_SHORT).show();
+
+				Intent intent2 = new Intent(
+						Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
+				intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent2);
+
+				return;
+
+			}
 
 			String DbPath = bundle.getString("DB"); // 用于接收字符串
 
@@ -104,6 +123,7 @@ public class FakeLocationService extends Service {
 
 	}
 
+	// 按顺序模拟位置
 	public void setLocationForward() {
 
 		final LocationManager mLocationManager = (LocationManager) getSystemService(serviceName);
@@ -163,8 +183,14 @@ public class FakeLocationService extends Service {
 							loc.setAccuracy(100);
 						}
 
-						mLocationManager.setTestProviderLocation(
-								LocationManager.GPS_PROVIDER, loc);
+						try {
+
+							mLocationManager.setTestProviderLocation(
+									LocationManager.GPS_PROVIDER, loc);
+						} catch (java.lang.SecurityException e) {
+							e.printStackTrace();
+							return;
+						}
 
 						if (j == Latitude.size() - 1) {
 							Log.i(TAG, "Forward End! Valar Morghulis");
@@ -181,6 +207,7 @@ public class FakeLocationService extends Service {
 		}
 	} // setLocationForward
 
+	// 倒序模拟位置
 	public void setLocationBackward() {
 
 		Log.i(TAG, "Backward In! Valar Morghulis");
@@ -216,12 +243,6 @@ public class FakeLocationService extends Service {
 			mHandler.postDelayed(new Runnable() {
 				public void run() {
 
-					/*
-					 * Log.i(TAG, "gps_info:" + j + ":" + Latitude.get(j) + ":"
-					 * + Longitude.get(j) + ":" + Altitude.get(j) + ":" +
-					 * Bearing.get(j) + ":" + Speed.get(j) + ":" + Time.get(j));
-					 */
-
 					Location loc = new Location(LocationManager.GPS_PROVIDER);
 					loc.setLatitude(Latitude.get(j));
 					loc.setLongitude(Longitude.get(j));
@@ -231,17 +252,20 @@ public class FakeLocationService extends Service {
 					loc.setSpeed(Speed.get(j));
 					loc.setTime(System.currentTimeMillis());
 
-					// stackoverflow.com/
-					// settestproviderlocation-error-location-not-being-set-despite-all-parameters
-
 					if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
 						loc.setElapsedRealtimeNanos(SystemClock
 								.elapsedRealtimeNanos());
 						loc.setAccuracy(100);
 					}
 
-					mLocationManager.setTestProviderLocation(
-							LocationManager.GPS_PROVIDER, loc);
+					try {
+
+						mLocationManager.setTestProviderLocation(
+								LocationManager.GPS_PROVIDER, loc);
+					} catch (java.lang.SecurityException e) {
+						e.printStackTrace();
+						return;
+					}
 
 					if (j == 0) {
 						Log.i(TAG, "Backward End ! Valar Morghulis");
@@ -256,7 +280,6 @@ public class FakeLocationService extends Service {
 
 		} // for
 
-		// }
 	} // setLocationForward
 
 }
