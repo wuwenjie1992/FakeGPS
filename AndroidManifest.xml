@@ -3,7 +3,7 @@
     package="tk.wuwenjie.fakegps"
     android:installLocation="preferExternal"
     android:versionCode="1"
-    android:versionName="1.0-beta.2 GPS模拟与记录 wwj Valar Morghulis Valar Dohaeris" >
+    android:versionName="1.0-beta.3 GPS模拟与记录 Valar Morghulis Valar Dohaeris" >
 
     <uses-sdk
         android:minSdkVersion="19"

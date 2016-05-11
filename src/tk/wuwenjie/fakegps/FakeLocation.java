@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ public class FakeLocation extends Activity {
 
 	TextView fake_info;
 	AutoCompleteTextView dbfile;
+	EditText rate_v;
 
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -25,7 +27,7 @@ public class FakeLocation extends Activity {
 
 		fake_info = (TextView) findViewById(R.id.fake_info);
 		fake_info
-				.setText("开始模拟,在下面的地址填写GPS记录文件！\n" + "可能的位置："
+				.setText("开始模拟,在下面的地址填写GPS记录文件与速率！\n" + "可能的位置："
 						+ Environment.getExternalStorageDirectory()
 						+ "/FakeGPS/GPS.db");
 
@@ -37,6 +39,8 @@ public class FakeLocation extends Activity {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, dbs);
 		dbfile.setAdapter(adapter);
+
+		rate_v = (EditText) findViewById(R.id.edit_text);
 
 	}
 
@@ -90,13 +94,25 @@ public class FakeLocation extends Activity {
 				return false;
 			}
 
-			Toast.makeText(this, "开始循环模拟：" + path, Toast.LENGTH_SHORT).show();
+			String rate_s = rate_v.getText().toString();
+
+			if (rate_s == "") {
+
+				Toast.makeText(this, "rate is null!", Toast.LENGTH_SHORT)
+						.show();
+
+				return false;
+			}
+
+			Toast.makeText(this, "开始循环模拟：" + path + "速率：" + rate_s,
+					Toast.LENGTH_SHORT).show();
 
 			Intent mIntent01 = new Intent(FakeLocation.this,
 					FakeLocationService.class);
 			Bundle mBundle = new Bundle();
 			mBundle.putString("Action", "Start");
 			mBundle.putString("DB", path);
+			mBundle.putString("RATE", rate_s);
 			mIntent01.putExtras(mBundle); // 添加附加信息
 			startService(mIntent01);
 

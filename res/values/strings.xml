@@ -20,5 +20,7 @@
         <item>/storage/emulated/0/FAKEGPS/GPS.db</item>
         <item>/sdcard/FAKEGPS/GPS.db</item>
     </string-array>
+    
+    <string name="defaut_rate">0.39</string>
 
 </resources>

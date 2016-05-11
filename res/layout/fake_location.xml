@@ -12,6 +12,15 @@
         android:inputType="text" >
     </AutoCompleteTextView>
 
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_below="@+id/dbfile"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/defaut_rate"
+        android:inputType="numberDecimal" >
+    </EditText>
+
     <TextView
         android:id="@+id/fake_info"
         android:layout_width="match_parent"

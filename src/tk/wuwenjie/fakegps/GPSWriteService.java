@@ -57,7 +57,7 @@ public class GPSWriteService extends Service {
 
 		// 判断GPS是否正常启动
 		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			Toast.makeText(this, "请开启GPS导航...", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "请开启GPS导航...", Toast.LENGTH_LONG).show();
 
 			// 返回开启GPS导航设置界面
 			Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);

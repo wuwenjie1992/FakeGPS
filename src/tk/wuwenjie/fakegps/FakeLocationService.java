@@ -67,7 +67,7 @@ public class FakeLocationService extends Service {
 
 			if (isCloseMOCK) {
 
-				Toast.makeText(this, "请开启模拟位置...", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "请开启模拟位置...", Toast.LENGTH_LONG).show();
 
 				Intent intent2 = new Intent(
 						Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
@@ -79,6 +79,7 @@ public class FakeLocationService extends Service {
 			}
 
 			String DbPath = bundle.getString("DB"); // 用于接收字符串
+			float RATE = Float.valueOf(bundle.getString("RATE"));
 
 			// 打开或创建test.db数据库
 			db = SQLiteDatabase.openDatabase(DbPath, null,
@@ -98,12 +99,14 @@ public class FakeLocationService extends Service {
 
 			}
 
-			Log.i(TAG, cursor.getPosition() + "" + cursor.getCount());
+			// Log.i(TAG, cursor.getPosition() + "" + cursor.getCount());
 
 			cursor.close();
 			db.close();
 
-			setLocationForward();
+			Log.i(TAG, "DbPath:" + DbPath + ",RATE:" + RATE);
+
+			setLocationForward(RATE);
 
 		}
 	}
@@ -119,12 +122,11 @@ public class FakeLocationService extends Service {
 
 		if (db != null)
 			db.close();
-		//
 
 	}
 
 	// 按顺序模拟位置
-	public void setLocationForward() {
+	public void setLocationForward(final float rate) {
 
 		final LocationManager mLocationManager = (LocationManager) getSystemService(serviceName);
 
@@ -195,12 +197,13 @@ public class FakeLocationService extends Service {
 						if (j == Latitude.size() - 1) {
 							Log.i(TAG, "Forward End! Valar Morghulis");
 							Log.i(TAG, "Backward Begin! Valar Dohaeris");
-							setLocationBackward();
+							setLocationBackward(rate);
 						}
 
 					} // run
 
-				}, (long) Math.floor(Math.abs(Time.get(j) - Time.get(2)) * 0.2));
+				}, (long) Math
+						.floor(Math.abs(Time.get(j) - Time.get(2)) * rate));
 
 			} // for
 
@@ -208,19 +211,11 @@ public class FakeLocationService extends Service {
 	} // setLocationForward
 
 	// 倒序模拟位置
-	public void setLocationBackward() {
+	public void setLocationBackward(final float rate) {
 
 		Log.i(TAG, "Backward In! Valar Morghulis");
 
 		final LocationManager mLocationManager = (LocationManager) getSystemService(serviceName);
-
-		// stackoverflow.com/android-mock-location-on-device
-
-		// if (mLocationManager.getProvider(LocationManager.GPS_PROVIDER) !=
-		// null) {
-
-		// Log.i(TAG, LocationManager.GPS_PROVIDER);
-		// mLocationManager.removeTestProvider(LocationManager.GPS_PROVIDER);
 
 		mLocationManager.addTestProvider(LocationManager.GPS_PROVIDER,
 				"requiresNetwork" == "", "requiresSatellite" == "",
@@ -270,13 +265,14 @@ public class FakeLocationService extends Service {
 					if (j == 0) {
 						Log.i(TAG, "Backward End ! Valar Morghulis");
 						Log.i(TAG, "Forward Begin ! Valar Dohaeris");
-						setLocationForward();
+						setLocationForward(rate);
 					}
 
 				} // run
 
 			}, (long) Math.floor(Math.abs(Time.get(j)
-					- Time.get(Latitude.size() - 1)) * 0.2));
+					- Time.get(Latitude.size() - 1))
+					* rate));
 
 		} // for
 
